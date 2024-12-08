@@ -638,9 +638,12 @@ EOF
 }
 
 startSingBox(){
-
   cd ${installpath}/serv00-play/singbox
-
+  
+  if [[ ! -e "singbox.json" ]]; then
+     red "请先进行配置!"
+     return 1
+  fi
   
   # if [[ ! -e ${installpath}/serv00-play/singbox/serv00sb ]] || [[ ! -e ${installpath}/serv00-play/singbox/cloudflared ]]; then
   #   read -p "请输入使用密码:" password
@@ -669,7 +672,6 @@ startSingBox(){
   yellow "启动成功!"
 
 }
-
 
 stopSingBox(){
   cd ${installpath}/serv00-play/singbox
@@ -867,6 +869,9 @@ InitServer(){
 }
 
 manageNeZhaAgent(){
+  if ! checkInstalled "serv00-play"; then
+     return 1
+  fi
   while true; do
   yellow "-------------------------"
   echo "探针管理："
@@ -1258,6 +1263,9 @@ stopMtg(){
 }
 
 mtprotoServ(){
+  if ! checkInstalled "serv00-play"; then
+     return 1
+  fi
    cd ${installpath}/serv00-play
 
    if [ ! -e "dmtg" ]; then
